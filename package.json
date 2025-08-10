@@ -13,5 +13,9 @@
     "backend"
   ],
   "author": "Rohit",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5"
+  }
 }
