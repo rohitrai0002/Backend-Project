@@ -6,17 +6,17 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 
 const registerUser = asyncHandler( async (req,res) => {
     //get user details from frontend 
-    const {fullName, email, username, password} = req.body
+    const {fullname, email, username, password} = req.body
     console.log("email: " , email);
 
     //validate - not empty
-    if([fullName, email, username, password].some((field) => field?.trim() === ""))
+    if([fullname, email, username, password].some((field) => field?.trim() === ""))
     {
         throw new ApiError(400, "All fields are required")
     }
 
     //check user exists
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{username}, {email}]
     })
 
@@ -35,7 +35,7 @@ const registerUser = asyncHandler( async (req,res) => {
     }
 
     //upload to cloudinary
-    const avtar = await uploadOnCloudinary(avtarLocalPath)
+    const avatar = await uploadOnCloudinary(avtarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     if(!avatar){
         throw new ApiError(400, "avatar is required field")
@@ -43,7 +43,7 @@ const registerUser = asyncHandler( async (req,res) => {
 
     //create user object in Db
     const user = await User.create({
-        fullName,
+        fullname,
         avatar: avatar.url,
         coverImage: coverImage.url || "",
         email,

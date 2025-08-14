@@ -1,4 +1,4 @@
-import multer from "multer";
+import multer from "multer"
 
 //cb callback
 const storage = multer.diskStorage({
@@ -10,4 +10,6 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage })
+
+export { upload }
